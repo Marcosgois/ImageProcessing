@@ -1,6 +1,6 @@
-%clear all
-%close all
-%clc
+clear all
+close all
+clc
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,10 +28,11 @@ figure , imshow(ycbcr(:,:,1)); %Componente Y
 figure , imshow(ycbcr(:,:,2)); %Componente Cb
 figure , imshow(ycbcr(:,:,3)); %Componente Cr
 %}
-figure , imshow(ycbcr(:,:,2)); %Componente Cb
-ycbcr(:,:,1) = saltPeperFilter(ycbcr(:,:,1));
+ycbcr(:,:,2) = mediuanFilter(ycbcr(:,:,2));
+figure, imshow(ycbcr(:,:,2));
 ycbcr(:,:,3) = imgaussfilt(ycbcr(:,:,3), 2);%Solução encontrada por enquanto!
 RGB = ycbcr2rgb(ycbcr);
+figure, imshow(RGB);
 
 %{
 %%%%%%%%%%%%%%%%
@@ -64,7 +65,7 @@ function [Y, Cb, Cr] = RGBconversionToYCBCR(R, G, B)
     end
 end
 
-function [imageFiltered] = saltPeperFilter(Img)
+function [imageFiltered] = mediuanFilter(Img)
     [h, w] = size(Img);
     iFiltered = zeros(h, w);
     for i = 2:h-1
@@ -75,7 +76,10 @@ function [imageFiltered] = saltPeperFilter(Img)
         end
         disp(i);
     end
-    iFiltered = uint8(iFiltered);
-    figure, imshow(iFiltered);
-    imageFiltered = iFiltered;
+    imageFiltered = uint8(iFiltered);
+end
+
+function [imageNormalized] = normalizeImage(Img)
+    [h, w] = size(Img);
+    
 end
